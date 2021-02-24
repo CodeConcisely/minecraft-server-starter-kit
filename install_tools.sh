@@ -1,12 +1,12 @@
 #!/bin/bash
 
-DIR="."
-REV="latest"
+INSTALL_DIR="."
+VERSION="latest" # latest for most recent or a specific version e.g. 1.16.4
 
 while getopts "hd:v:" OPTION; do
   case "$OPTION" in
     d)
-      DIR="$OPTARG";;
+      INSTALL_DIR="$OPTARG";;
     h)
       echo -e "Usage: ./install_tools.sh [-d path] [-v version]"
       echo -e "Example: ./install_tools.sh -d /opt/minecraft/BuildTools -v 1.16.5 \n"
@@ -15,22 +15,23 @@ while getopts "hd:v:" OPTION; do
       echo "  -v version      Install a specific server version"
       exit 0;;
 
-    r)
-      REV="$OPTARG";;
+    v)
+      VERSION="$OPTARG";;
     ?)
       echo "Use -h for help"
       exit 1;;
   esac
 done
 
-mkdir -p $DIR
-cd $DIR
 
-echo "--- Downloading BuildTools in $DIR ---"
+mkdir -p $INSTALL_DIR
+cd $INSTALL_DIR
+
+echo "--- Downloading BuildTools in `pwd` ---"
 
 wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 
-echo "--- Installing server version $REV ---"
+echo "--- Installing server version $VERSION ---"
 
 git config --global --unset core.autocrlf
-java -jar BuildTools.jar --rev $REV
+java -jar BuildTools.jar --rev $VERSION --output-dir "build"
