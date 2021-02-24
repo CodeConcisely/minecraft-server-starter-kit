@@ -19,15 +19,18 @@ while getopts "hd:v:" OPTION; do
       REV="$OPTARG";;
     ?)
       echo "Use -h for help"
+      exit 1;;
   esac
 done
-
-echo $REV
 
 mkdir -p $DIR
 cd $DIR
 
+echo "--- Downloading BuildTools in $DIR ---"
+
 wget -O BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+
+echo "--- Installing server version $REV ---"
 
 git config --global --unset core.autocrlf
 java -jar BuildTools.jar --rev $REV
