@@ -11,7 +11,6 @@ done
 
 function cleanup() {
     sudo userdel minecraft
-    sudo groupdel minecraft
     sudo rm -rf /opt/minecraft/
     echo "--- Cleaned up ---"
 }

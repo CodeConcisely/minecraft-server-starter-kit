@@ -24,7 +24,7 @@ while getopts "hd:v:" OPTION; do
 done
 
 
-mkdir -p $INSTALL_DIR
+mkdir -p "$INSTALL_DIR" || { echo "Failed to create $INSTALL_DIR"; exit 1; }
 cd $INSTALL_DIR
 
 echo "--- Downloading BuildTools in `pwd` ---"
