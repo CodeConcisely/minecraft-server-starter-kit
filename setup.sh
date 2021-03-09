@@ -5,19 +5,19 @@ TOOLS_DIR="/opt/minecraft/BuildTools"
 SERVER_VERSION="latest"
 SCRIPTS_DIR=$(pwd)
 
-SETUP_STEPS=6
+SETUP_STEPS=7
 
-echo "--- Setting up user and group 1/$SETUP_STEPS ---"
+echo "--- Setting up user and group (1/$SETUP_STEPS) ---"
 groupadd minecraft
 useradd -r -m -d /opt/minecraft -g minecraft minecraft
 
-echo "--- Installing Git and Java 2/$SETUP_STEPS ---"
-apt-get install git openjdk-8-jre-headless
+echo "--- Installing Git, Java and Tmux (2/$SETUP_STEPS) ---"
+apt-get install git openjdk-8-jre-headless tmux
 
-echo "--- Running tools installation 3/$SETUP_STEPS ---"
+echo "--- Running tools installation (3/$SETUP_STEPS) ---"
 . install_tools.sh -d $TOOLS_DIR -v $SERVER_VERSION
 
-echo "--- Setting up server 4/$SETUP_STEPS ---"
+echo "--- Setting up server (4/$SETUP_STEPS) ---"
 mkdir -p "$SERVER_DIR" || { echo "Failed to create $SERVER_DIR"; exit 1; }
 
 FILE=$(find "$TOOLS_DIR/build" -type f -name "spigot-*.jar")
@@ -33,11 +33,17 @@ fi
 cp "$SCRIPTS_DIR/start_server.sh" "$SERVER_DIR/start_server.sh"
 echo "eula=true" > "$SERVER_DIR/eula.txt"
 
-echo "--- Updating permissions 5/$SETUP_STEPS ---"
+echo "--- Updating permissions (5/$SETUP_STEPS) ---"
 chmod +x $SERVER_DIR/start_server.sh
 chown -R minecraft:minecraft /opt/minecraft
 
-echo "--- Creating auto-shutdown cron job 6/$SETUP_STEPS ---"
+echo "--- Creating auto-shutdown cron job (6/$SETUP_STEPS) ---"
 cp $SCRIPTS_DIR/minecraft_server_jobs /etc/cron.d/minecraft_server_jobs
 
-echo "--- Done. Minecraft server can be started by executing $SERVER_DIR/start_server.sh ---"
+echo "--- Setting up systemd service (7/$SETUP_STEPS) ---"
+cp minecraft.service /etc/systemd/system/minecraft.service
+systemctl daemon-reload
+systemctl start minecraft
+systemctl enable minecraft
+
+echo "--- Minecraft server setup is done ---"
