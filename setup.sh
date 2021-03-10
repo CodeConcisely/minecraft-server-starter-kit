@@ -33,17 +33,18 @@ fi
 cp "$SCRIPTS_DIR/start_server.sh" "$SERVER_DIR/start_server.sh"
 echo "eula=true" > "$SERVER_DIR/eula.txt"
 
-echo "--- Updating permissions (5/$SETUP_STEPS) ---"
-chmod +x $SERVER_DIR/start_server.sh
-chown -R minecraft:minecraft /opt/minecraft
-
-echo "--- Creating auto-shutdown cron job (6/$SETUP_STEPS) ---"
+echo "--- Creating auto-shutdown cron job (5/$SETUP_STEPS) ---"
+cp $SCRIPTS_DIR/auto_shutdown.sh $SERVER_DIR/auto_shutdown.sh
 cp $SCRIPTS_DIR/minecraft_server_jobs /etc/cron.d/minecraft_server_jobs
 
-echo "--- Setting up systemd service (7/$SETUP_STEPS) ---"
+echo "--- Setting up systemd service (6/$SETUP_STEPS) ---"
 cp minecraft.service /etc/systemd/system/minecraft.service
 systemctl daemon-reload
 systemctl start minecraft.service
 systemctl enable minecraft.service
+
+echo "--- Updating permissions (7/$SETUP_STEPS) ---"
+chmod +x $SERVER_DIR/start_server.sh
+chown -R minecraft:minecraft /opt/minecraft
 
 echo "--- Minecraft server setup is done ---"

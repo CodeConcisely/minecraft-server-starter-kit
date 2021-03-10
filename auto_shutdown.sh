@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERVICE="spigot.jar"
-LOGS=/home/ec2-user/spigot_server/logs/latest.log
+LOGS=/opt/minecraft/server/logs/latest.log
 NO_PLAYERS="There are 0 of a max of 20 players online"
 VERBOSE_MODE=0
 

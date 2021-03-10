@@ -1,1 +1,1 @@
-*/10 * * * * root /bin/sh /home/dev/Projects/cc/minecraft-server/auto_shutdown.sh
+*/10 * * * * root /bin/sh /opt/minecraft/server/auto_shutdown.sh
