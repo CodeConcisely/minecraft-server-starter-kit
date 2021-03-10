@@ -36,6 +36,7 @@ echo "eula=true" > "$SERVER_DIR/eula.txt"
 echo "--- Creating auto-shutdown cron job (5/$SETUP_STEPS) ---"
 cp $SCRIPTS_DIR/auto_shutdown.sh $SERVER_DIR/auto_shutdown.sh
 cp $SCRIPTS_DIR/minecraft_server_jobs /etc/cron.d/minecraft_server_jobs
+chmod +x $SERVER_DIR/auto_shutdown.sh
 
 echo "--- Setting up systemd service (6/$SETUP_STEPS) ---"
 cp minecraft.service /etc/systemd/system/minecraft.service

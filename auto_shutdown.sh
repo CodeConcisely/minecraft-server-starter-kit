@@ -13,7 +13,7 @@ do
 done
 
 function get_players() {
-    sudo tmux send-keys -t "minecraft_session" "list" Enter
+    sudo -H -u minecraft bash -c 'tmux send-keys -t "minecraft" "list" Enter'
     sleep 5s
     PLAYERS=$(tail -n 1 $LOGS | cut -d ":" -f 4 | xargs)
 }
@@ -46,7 +46,7 @@ then
     if [[ "$PLAYERS" == "$NO_PLAYERS" ]]
     then
         log "STILL EMPTY - SHUTDOWN"
-	shutdown
+        shutdown
     fi
 else
     log "NOT EMPTY"
