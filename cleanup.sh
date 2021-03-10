@@ -10,6 +10,8 @@ while getopts "f" OPTION; do
 done
 
 function cleanup() {
+    sudo systemctl stop minecraft.service
+    sudo systemctl disable minecraft.service
     sudo rm /etc/cron.d/minecraft_server_jobs
     sudo userdel minecraft
     sudo rm -rf /opt/minecraft/

@@ -43,7 +43,7 @@ cp $SCRIPTS_DIR/minecraft_server_jobs /etc/cron.d/minecraft_server_jobs
 echo "--- Setting up systemd service (7/$SETUP_STEPS) ---"
 cp minecraft.service /etc/systemd/system/minecraft.service
 systemctl daemon-reload
-systemctl start minecraft
-systemctl enable minecraft
+systemctl start minecraft.service
+systemctl enable minecraft.service
 
 echo "--- Minecraft server setup is done ---"
