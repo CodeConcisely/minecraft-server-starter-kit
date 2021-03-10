@@ -39,7 +39,7 @@ cp $SCRIPTS_DIR/minecraft_server_jobs /etc/cron.d/minecraft_server_jobs
 chmod +x $SERVER_DIR/auto_shutdown.sh
 
 echo "--- Setting up systemd service (6/$SETUP_STEPS) ---"
-cp minecraft.service /etc/systemd/system/minecraft.service
+cp $SCRIPTS_DIR/minecraft.service /etc/systemd/system/minecraft.service
 systemctl daemon-reload
 systemctl start minecraft.service
 systemctl enable minecraft.service
