@@ -6,10 +6,11 @@ After=network.target
 [Service]
 Type=forking
 
+KillMode=none
+SuccessExitStatus=0 1
+
 User=minecraft
 Group=minecraft
-
-Restart=on-failure
 
 ProtectSystem=full
 ProtectHome=true
